@@ -73,9 +73,9 @@ Mesh::Mesh(const Vertex* vertexData, size_t vertexSize, const void* indexData, s
     m_ebo.bind();
 
     m_vao.setVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*)0);
-    m_vao.setVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*)3);
-    m_vao.setVertexAttribPointer(2, 2, GL_FLOAT, GL_TRUE, 11 * sizeof(float), (void*)6);
-    m_vao.setVertexAttribPointer(3, 3, GL_FLOAT, GL_TRUE, 11 * sizeof(float), (void*)8);
+    m_vao.setVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*)(3 * (sizeof(float))));
+    m_vao.setVertexAttribPointer(2, 2, GL_FLOAT, GL_TRUE, 11 * sizeof(float), (void*)(6 * (sizeof(float))));
+    m_vao.setVertexAttribPointer(3, 3, GL_FLOAT, GL_TRUE, 11 * sizeof(float), (void*)(8 * (sizeof(float))));
 
     m_vao.unbind();
 }
