@@ -2,6 +2,7 @@
 #define GAME_G
 
 #include "Window.h"
+#include "Camera.h"
 
 class Game{
     public:
@@ -12,7 +13,8 @@ class Game{
 
     private:
         Window* m_window;
-
+        Camera m_camera;
+        
         static void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 };
 

@@ -17,6 +17,10 @@ Game::Game(int width, int height, const char* title) {
     glfwSetFramebufferSizeCallback(m_window->getGLFWwindow(), framebufferSizeCallback);
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+    m_camera.makePerspective(45.0f, (float)width / height, 0.1f, 100.0f);
+    m_camera.setPosition(glm::vec3(0.0f, 0.0f, 3.0f));
+    m_camera.setLookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 Game::~Game() {
@@ -30,6 +34,9 @@ void Game::run() {
     Shader shader = ResourceManager::LoadShader("flatColour");
 
     shader.use();
+    shader.setUniform("model", glm::mat4(1.0f));
+    shader.setUniform("view", m_camera.getViewMatrix());
+    shader.setUniform("projection", m_camera.getProjectionMatrix());
 
     while (m_window->isOpen()) {
         // Game loop logic goes here
