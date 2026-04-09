@@ -8,7 +8,7 @@ class Camera{
         Camera() = default;
         ~Camera() = default;
 
-        const glm::mat4& getViewMatrix() const;
+        const glm::mat4 getViewMatrix() const;
         const glm::mat4& getProjectionMatrix() const;
 
         void makePerspective(float fov, float aspectRatio, float nearClip, float farClip);
@@ -17,9 +17,14 @@ class Camera{
         void setPosition(const glm::vec3& position);
         void setLookAt(const glm::vec3& target, const glm::vec3& up);
 
+        void rotate(float angle, const glm::vec3& axis);
+
     private:
         glm::mat4 m_projMatrix;
-        glm::mat4 m_viewMatrix;
+        glm::vec3 m_position;
+        glm::vec3 m_direction;
+        glm::vec3 m_up;
+
 };
 
 #endif

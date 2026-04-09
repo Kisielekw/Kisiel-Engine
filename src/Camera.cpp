@@ -1,8 +1,8 @@
 #include "Camera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-const glm::mat4& Camera::getViewMatrix() const {
-    return m_viewMatrix;
+const glm::mat4 Camera::getViewMatrix() const {
+    return glm::lookAt(m_position, m_position + m_direction, m_up);
 }
 
 const glm::mat4& Camera::getProjectionMatrix() const {
@@ -19,10 +19,16 @@ void Camera::makeOrthographic(float left, float right, float bottom, float top, 
 
 
 void Camera::setPosition(const glm::vec3& position) {
-    m_viewMatrix = glm::translate(glm::mat4(1.0f), -position);
+    m_position = position;
 }
 
 void Camera::setLookAt(const glm::vec3& target, const glm::vec3& up) {
-    glm::vec3 position = -glm::inverse(m_viewMatrix)[3];
-    m_viewMatrix = glm::lookAt(position, target, up);
+    m_direction = glm::normalize(target - m_position);
+    m_up = glm::normalize(up);
+}
+
+void Camera::rotate(float angle, const glm::vec3& axis) {
+    glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis);
+    m_direction = glm::normalize(glm::vec3(rotation * glm::vec4(m_direction, 0.0f)));
+    m_up = glm::normalize(glm::vec3(rotation * glm::vec4(m_up, 0.0f)));
 }
