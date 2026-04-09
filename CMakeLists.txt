@@ -22,6 +22,18 @@ endif()
 
 include_directories(include_Dependencies)
 
-add_executable(Game src/main.cpp src/Window.cpp src/Game.cpp src/Mesh.cpp src/Shader.cpp src/glad.c) 
+add_executable(Game src/main.cpp 
+    src/Window.cpp
+    src/Game.cpp
+    src/Mesh.cpp
+    src/Shader.cpp
+    src/ResourceManager.cpp
+    src/glad.c)
 target_link_libraries(Game PRIVATE OpenGL::GL)
 target_link_libraries(Game PRIVATE glfw)
+
+add_custom_command(TARGET Game POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/Assets
+        $<TARGET_FILE_DIR:Game>/Assets
+)
