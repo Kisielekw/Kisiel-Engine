@@ -20,6 +20,18 @@ if (NOT glfw3_FOUND)
     fetchcontent_makeavailable(glfw)
 endif()
 
+find_package(glm QUIET)
+
+if(NOT glm_FOUND)
+    message(STATUS "glm was not found, downloading and building it...")
+
+    fetchcontent_declare(
+        glm
+        GIT_REPOSITORY https://github.com/g-truc/glm.git
+    )
+    fetchcontent_makeavailable(glm)
+endif()
+
 include_directories(include_Dependencies)
 
 add_executable(Game src/main.cpp 
@@ -28,9 +40,11 @@ add_executable(Game src/main.cpp
     src/Mesh.cpp
     src/Shader.cpp
     src/ResourceManager.cpp
+    src/Camera.cpp
     src/glad.c)
 target_link_libraries(Game PRIVATE OpenGL::GL)
 target_link_libraries(Game PRIVATE glfw)
+target_link_libraries(Game PRIVATE glm)
 
 add_custom_command(TARGET Game POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
