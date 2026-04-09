@@ -1,8 +1,9 @@
+#include <iostream>
 #include <glad/glad.h>
 #include "Game.h"
-#include "Mesh.h"
+#include "ResourceManager.h"
 #include "Shader.h"
-#include <iostream>
+#include "Mesh.h"
 
 Game::Game(int width, int height, const char* title) {
     glfwInit();
@@ -24,29 +25,17 @@ Game::~Game() {
 }
 
 void Game::run() {
+    Mesh mesh = ResourceManager::LoadMesh("triangle");
 
-    const char *vertexShaderSource = "#version 330 core\n"
-        "layout (location = 0) in vec3 aPos;\n"
-        "void main()\n"
-        "{\n"
-        "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-        "}\0";
-
-    const char *fragmentShaderSource = "#version 330 core\n"
-        "out vec4 FragColor;\n"
-        "void main()\n"
-        "{\n"
-        "   FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n"
-        "}\0";
-
-
-    Shader shader(vertexShaderSource, fragmentShaderSource);
+    Shader shader = ResourceManager::LoadShader("flatColour");
 
     shader.use();
 
     while (m_window->isOpen()) {
         // Game loop logic goes here
         glClear(GL_COLOR_BUFFER_BIT);
+
+        mesh.Draw();
 
         m_window->swapBuffers();
         glfwPollEvents();
