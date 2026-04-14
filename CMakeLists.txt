@@ -41,6 +41,7 @@ add_executable(Game src/main.cpp
     src/Shader.cpp
     src/ResourceManager.cpp
     src/Camera.cpp
+    src/Entity.cpp
     src/glad.c)
 target_link_libraries(Game PRIVATE OpenGL::GL)
 target_link_libraries(Game PRIVATE glfw)
