@@ -43,6 +43,8 @@ add_executable(Game src/main.cpp
     src/Camera.cpp
     src/Entity.cpp
     src/Component.cpp
+    src/SystemManager.cpp
+    src/System.cpp
     src/glad.c)
 target_link_libraries(Game PRIVATE OpenGL::GL)
 target_link_libraries(Game PRIVATE glfw)
